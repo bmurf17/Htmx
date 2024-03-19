@@ -59,6 +59,15 @@ func fetchCount() (int, error) {
 	return count, nil
 }
 
+func fetchCompletedCount() (int, error) {
+	var completedCount int
+	err := DB.QueryRow("select count(*) from tasks where completed = 1;").Scan(&completedCount)
+	if err != nil {
+		return 0, err
+	}
+	return completedCount, nil
+}
+
 func insertTask(title string) (Item, error) {
 	count, err := fetchCount()
 	if err != nil {
